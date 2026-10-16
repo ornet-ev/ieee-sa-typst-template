@@ -1,0 +1,978 @@
+/* ============================================================
+   Standards Stylesheet — for Typst HTML Export
+   Refined editorial aesthetic · Left-anchored navigation
+   ============================================================ */
+
+/* ── Design Tokens ────────────────────────────────────────── */
+:root {
+  /* IEEE identity */
+  --ieee-blue:        #002855;
+  --ieee-blue-mid:    #0057a8;
+  --ieee-blue-light:  #e8f0fb;
+  --ieee-blue-pale:   #f3f7fd;
+
+  /* Neutrals */
+  --ink:              #1a1a2e;
+  --ink-mid:          #3d3d5c;
+  --ink-faint:        #6b6b8a;
+  --rule:             #d4d8e8;
+  --rule-light:       #eceef6;
+  --paper:            #fafbfe;
+  --white:            #ffffff;
+
+  /* Semantic accents */
+  --req-technical:    #003087;
+  --req-risk:         #8b1a1a;
+  --req-process:      #1a5c1a;
+  --note-bg:          #fffbea;
+  --note-border:      #e6b800;
+  --note-ink:         #5a4500;
+  --abstract-bg:      #f0f4fb;
+  --abstract-border:  #003087;
+
+  /* Layout
+     Total page width = nav + content + gaps.
+     Body is centred at --page-max; the fixed nav is offset
+     relative to the viewport centre to stay glued to the
+     left edge of the centred content column.               */
+  --nav-width:        328px;
+  --content-max:      820px;
+  --gap:              2rem;
+  --page-max:         calc(var(--nav-width) + var(--content-max) + var(--gap) * 2);
+
+  /* Typography */
+  --font-body:        Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, 'Times New Roman', serif;
+  --font-ui:          system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:        ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Menlo, Consolas, 'Courier New', monospace;
+  --font-size-base:   17px;
+  --line-height:      1.72;
+  --text-sm:          0.875rem;
+  --text-xs:          0.8rem;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: var(--font-size-base);
+  scroll-behavior: smooth;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: var(--line-height);
+  display: block;
+  /* Centre the whole layout and reserve space for the fixed nav */
+  max-width: var(--page-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--nav-width);
+}
+
+/* ── Page Layout ──────────────────────────────────────────── */
+
+/* Fixed nav: anchored to the left edge of the centred body.
+   We use left: 50% then subtract half of --page-max, which
+   lands us exactly at the body's left edge in the viewport. */
+nav[role="doc-toc"] {
+  position: fixed;
+  top: 0;
+  left: max(0px, calc(50% - var(--page-max) / 2));
+  width: var(--nav-width);
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--ieee-blue);
+  color: var(--white);
+  padding: 2rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) transparent;
+}
+
+/* Content column: fills the space right of the nav */
+body > *:not(nav[role="doc-toc"]) {
+  max-width: calc(var(--content-max) + var(--gap) * 2);
+  margin-left: var(--gap);
+  margin-right: var(--gap);
+  box-sizing: border-box;
+}
+
+/* Top breathing room for the first visible element */
+body > abstract:first-of-type,
+body > h3#introduction {
+  margin-top: 3rem;
+}
+
+body > abstract {
+  padding-top: 0;
+}
+
+body > keywords {
+  padding-top: 0;
+}
+
+/* ── Navigation ───────────────────────────────────────────── */
+
+nav[role="doc-toc"] h2 {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+nav[role="doc-toc"] ol,
+nav[role="doc-toc"] ul,
+nav[role="doc-toc"] li {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+nav[role="doc-toc"] li {
+  line-height: 1.35;
+}
+
+nav[role="doc-toc"] a {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.80);
+  text-decoration: none;
+  padding: 0.3rem 0.5rem 0.3rem 0;
+  border-radius: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+
+nav[role="doc-toc"] a:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.10);
+  padding-left: 0.4rem;
+}
+
+nav[role="doc-toc"] .prefix {
+  font-weight: 600;
+  color: rgba(255,255,255,0.50);
+  margin-right: 0.3em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* nested levels — max depth: 2 */
+nav[role="doc-toc"] ol ol {
+  padding-left: 0.9rem;
+  border-left: 1px solid rgba(255,255,255,0.12);
+  margin: 0.1rem 0 0.1rem 0.3rem;
+}
+
+nav[role="doc-toc"] ol ol a { font-size: 0.74rem; color: rgba(255,255,255,0.68); }
+
+/* hide third level and deeper */
+nav[role="doc-toc"] ol ol ol { display: none; }
+
+/* ── Typography ───────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--ieee-blue);
+  margin-top: 2.4rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+h2 { font-size: 1.45rem; border-bottom: 2px solid var(--ieee-blue); padding-bottom: 0.35rem; }
+h3 { font-size: 1.12rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.25rem; }
+h4 { font-size: 0.97rem; font-weight: 600; }
+h5, h6 { font-size: 0.9rem; font-weight: 500; }
+
+/* Introduction heading is h3 but should look like a section opener */
+h3#introduction {
+  font-size: 1.15rem;
+  color: var(--ieee-blue);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.3rem;
+  margin-top: 3rem;
+}
+
+p { margin: 0.8rem 0; }
+p + p { margin-top: 0.6rem; }
+
+a {
+  color: var(--ieee-blue-mid);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--ieee-blue); }
+
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  background: var(--rule-light);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+/* ── Abstract ─────────────────────────────────────────────── */
+
+abstract {
+  display: block;
+  background: var(--abstract-bg);
+  border-left: 4px solid var(--abstract-border);
+  border-radius: 0 6px 6px 0;
+  padding: 1.5rem 1.75rem;
+  margin: 2rem 0 2.5rem;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  position: relative;
+}
+
+abstract::before {
+  content: "Abstract";
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ieee-blue);
+  margin-bottom: 0.85rem;
+}
+
+abstract p { margin: 0.6rem 0; color: var(--ink-mid); }
+abstract p:first-child { margin-top: 0; }
+
+/* ── Keywords ─────────────────────────────────────────────── */
+
+keywords {
+  display: block;
+  background: var(--abstract-bg);
+  border-left: 4px solid var(--abstract-border);
+  border-radius: 0 6px 6px 0;
+  padding: 1.5rem 1.75rem;
+  margin: 2rem 0 2.5rem;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  position: relative;
+}
+
+keywords::before {
+  content: "Keywords";
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ieee-blue);
+  margin-bottom: 0.85rem;
+}
+
+keywords p { margin: 0.6rem 0; color: var(--ink-mid); }
+keywords p:first-child { margin-top: 0; }
+
+/* ── Introduction ─────────────────────────────────────────── */
+
+introduction {
+  display: block;
+  padding: 0.5rem 0 1rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Requirements ─────────────────────────────────────────── */
+
+requirement {
+  display: block;
+  border: 1.5px solid var(--req-technical);
+  border-radius: 6px;
+  padding: 1rem 1.25rem 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--ieee-blue-pale);
+  position: relative;
+  padding-top: 2rem;
+}
+
+requirement::before {
+  content: "Requirement " attr(number) " (technical)";
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--req-technical);
+  position: absolute;
+  top: 0; left: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px 0 6px 0;
+}
+
+requirement[category="risk"] {
+  border-color: var(--req-risk);
+  background: #fff8f8;
+}
+requirement[category="risk"]::before {
+  content: "Requirement " attr(number) " (risk)";
+  background: var(--req-risk);
+}
+
+requirement[category="process"] {
+  border-color: var(--req-process);
+  background: #f8fff8;
+}
+requirement[category="process"]::before {
+  content: "Requirement " attr(number) " (process)";
+  background: var(--req-process);
+}
+
+requirement p { margin: 0.4rem 0; }
+requirement > p:first-of-type { margin-top: 0; }
+
+/* ── Notes ────────────────────────────────────────────────── */
+
+note {
+  display: block;
+  background: var(--note-bg);
+  border-left: 3px solid var(--note-border);
+  border-radius: 0 4px 4px 0;
+  padding: 0.6rem 1rem;
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.9rem;
+  color: var(--note-ink);
+  position: relative;
+}
+
+note::before {
+  content: attr(label);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9a7000;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+note p { margin: 0.3rem 0; }
+note p:first-child { margin-top: 0; }
+
+/* ── Normative References ─────────────────────────────────── */
+
+normative-references {
+  display: block;
+  margin: 1.25rem 0 1.5rem;
+}
+
+normative-reference {
+  display: block;
+  padding: 0.65rem 1rem 0.65rem 1rem;
+  border-left: 3px solid var(--ieee-blue-mid);
+  background: var(--ieee-blue-pale);
+  margin: 0.5rem 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.92rem;
+}
+
+normative-reference::before {
+  content: "[" attr(label) "]";
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ieee-blue);
+  display: inline-block;
+  margin-right: 0.6em;
+  min-width: 5em;
+}
+
+/* ── Definitions ──────────────────────────────────────────── */
+
+definitions {
+  display: block;
+  margin: 1rem 0 1.5rem;
+}
+
+definition {
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+definition:first-child { border-top: 1px solid var(--rule-light); }
+
+definition::before {
+  content: attr(term);
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+definition p { margin: 0.2rem 0; font-size: 0.95rem; color: var(--ink-mid); }
+
+/* ── Abbreviations / Glossary ─────────────────────────────── */
+
+abbreviations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 1rem 0 1.5rem;
+}
+
+glossary-plural {
+  display: inline;
+}
+
+glossary-plural > span.hide {
+  display: none;
+}
+
+glossary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  font-size: 0.93rem;
+}
+
+glossary:last-child {
+  border-bottom: none;
+}
+
+/* Pill badge showing the "short" attribute */
+glossary::before {
+  content: attr(short);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ieee-blue);
+  background: var(--ieee-blue-pale);
+  border: 1px solid var(--ieee-blue-light);
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+/* Description text */
+glossary {
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* ── Informative Bibliography ─────────────────────────────── */
+
+informative-bibliography {
+  display: block;
+  margin: 1rem 0 1.5rem;
+}
+
+informative-bibliography bibliography {
+  display: block;
+  padding: 0.65rem 1rem;
+  margin: 0.4rem 0;
+  border-left: 3px solid var(--rule);
+  background: var(--rule-light);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.91rem;
+  color: var(--ink-mid);
+}
+
+informative-bibliography bibliography::before {
+  content: "[" attr(label) "]";
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-faint);
+  display: inline-block;
+  margin-right: 0.6em;
+}
+
+/* ── Overview ────────────────────────────────────────────────── */
+
+scope {
+  display: block;
+
+}
+
+additional-overview {
+  display: block;
+}
+
+/* ── Main Content ─────────────────────────────────────────── */
+
+main-content {
+  display: block;
+}
+
+/* ── Normative & Informative Annexes ──────────────────────── */
+
+normative-annex,
+informative-annex {
+  display: block;
+}
+
+normative-annex > h2::after {
+  content: " (Normative)";
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+informative-annex > h2::after {
+  content: " (Informative)";
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ── ICS Tables ───────────────────────────────────────────── */
+
+ics-role {
+  display: block;
+  margin: 1.25rem 0;
+}
+
+ics-role::before {
+  content: "Role: " attr(role-name);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ieee-blue);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+ics-entry {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 0.83rem;
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+ics-entry::before { content: attr(ics-id); font-weight: 600; color: var(--ink); }
+ics-entry::after  { content: attr(level); color: var(--ieee-blue-mid); font-style: italic; font-size: 0.78rem; }
+
+/* ── Tables ───────────────────────────────────────────────── */
+
+figure {
+  margin: 1.5rem 0 2rem;
+}
+
+figure {
+  margin: 1.5rem 0 2rem;
+  text-align: center;
+}
+
+figure figcaption {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  margin-top: 0.6rem;
+  text-align: center;
+  font-style: italic;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+thead tr {
+  background: var(--ieee-blue);
+  color: var(--white);
+}
+
+thead th {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+thead th:last-child { border-right: none; }
+
+tbody tr:nth-child(even) { background: var(--ieee-blue-pale); }
+tbody tr:hover          { background: var(--ieee-blue-light); }
+
+tbody td {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--rule-light);
+  border-right: 1px solid var(--rule-light);
+  vertical-align: top;
+  color: var(--ink-mid);
+}
+
+tbody td:last-child { border-right: none; }
+tbody tr:last-child td { border-bottom: none; }
+
+/* ── Horizontal (rotated tables) ──────────────────────────── */
+
+horizontal {
+  display: block;
+  overflow-x: auto;
+  margin: 1rem -1rem;
+  padding: 0 1rem;
+}
+
+/* ── Lists ────────────────────────────────────────────────── */
+
+ul, ol {
+  margin: 0.6rem 0;
+  padding-left: 1.6rem;
+  list-style-position: outside; /* default, but explicit */
+}
+
+li { margin: 0.25rem 0; }
+
+ul li { list-style-type: disc; }
+ul li li { list-style-type: circle; }
+
+ol li { list-style-type: decimal; }
+ol li li { list-style-type: lower-alpha; }
+ol li li li { list-style-type: lower-roman; }
+
+/* ── Code / Pre blocks ────────────────────────────────────── */
+
+pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  border: 1px solid #313244;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Footnotes ────────────────────────────────────────────── */
+
+section[role="doc-endnotes"] {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--rule);
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+section[role="doc-endnotes"] ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+section[role="doc-endnotes"] li {
+  list-style: none !important;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  line-height: 1.6;
+}
+
+section[role="doc-endnotes"] a {
+  color: var(--ieee-blue-mid);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── Figures / Images ─────────────────────────────────────── */
+
+figure img {
+  max-width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+}
+
+/* ── Inline superscript (footnote refs) ───────────────────── */
+sup a {
+  font-family: var(--font-ui);
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--ieee-blue-mid);
+  text-decoration: none;
+}
+sup a:hover { text-decoration: underline; }
+
+/* ── Scrollbar (nav) ──────────────────────────────────────── */
+nav[role="doc-toc"]::-webkit-scrollbar { width: 4px; }
+nav[role="doc-toc"]::-webkit-scrollbar-track { background: transparent; }
+nav[role="doc-toc"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 2px; }
+
+/* ── Responsive breakpoint ────────────────────────────────── */
+@media (max-width: 900px) {
+  body {
+    padding-left: 0;
+    max-width: 100%;
+  }
+
+  nav[role="doc-toc"] {
+    position: static;
+    width: 100%;
+    height: auto;
+    left: auto;
+    border-bottom: 3px solid rgba(255,255,255,0.2);
+    padding: 1.25rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  :root { --font-size-base: 15px; }
+
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1rem; }
+
+  abstract { padding: 1rem 1.1rem; }
+  requirement { padding: 0.85rem 1rem; padding-top: 2rem; }
+}
+/* ============================================================
+   Theme Toggle Button
+   A small sun/moon button pinned to the top-right of the nav.
+   ============================================================ */
+
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;          /* push to bottom of nav flex column */
+  padding: 0.45rem 0.85rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.80);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  align-self: flex-start;
+}
+
+#theme-toggle:hover {
+  background: rgba(255,255,255,0.16);
+  color: #ffffff;
+}
+
+#theme-toggle .theme-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   Dark Mode Tokens
+   Applied when data-theme="dark" is set on <html> (explicit
+   toggle) OR when the OS prefers dark and the user has not
+   explicitly chosen light (data-theme="light").
+   Light is the default — no query needed for :root.
+   ============================================================ */
+
+/* ── Explicit dark choice ─────────────────────────────────── */
+html[data-theme="dark"] {
+  --ieee-blue:        #1a4a8a;
+  --ieee-blue-mid:    #5b9bd5;
+  --ieee-blue-light:  #1e3a5f;
+  --ieee-blue-pale:   #162840;
+
+  --ink:              #e8eaf2;
+  --ink-mid:          #b0b8d0;
+  --ink-faint:        #6e789a;
+  --rule:             #2e3350;
+  --rule-light:       #232845;
+  --paper:            #12141f;
+  --white:            #e8eaf2;
+
+  --req-technical:    #2a5298;
+  --req-risk:         #7a2020;
+  --req-process:      #1e5c1e;
+  --note-bg:          #1e1a00;
+  --note-border:      #c49a00;
+  --note-ink:         #d4b84a;
+  --abstract-bg:      #131e30;
+  --abstract-border:  #2a5298;
+}
+
+/* ── OS prefers dark, user has not overridden to light ───── */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --ieee-blue:        #1a4a8a;
+    --ieee-blue-mid:    #5b9bd5;
+    --ieee-blue-light:  #1e3a5f;
+    --ieee-blue-pale:   #162840;
+
+    --ink:              #e8eaf2;
+    --ink-mid:          #b0b8d0;
+    --ink-faint:        #6e789a;
+    --rule:             #2e3350;
+    --rule-light:       #232845;
+    --paper:            #12141f;
+    --white:            #e8eaf2;
+
+    --req-technical:    #2a5298;
+    --req-risk:         #7a2020;
+    --req-process:      #1e5c1e;
+    --note-bg:          #1e1a00;
+    --note-border:      #c49a00;
+    --note-ink:         #d4b84a;
+    --abstract-bg:      #131e30;
+    --abstract-border:  #2a5298;
+  }
+}
+
+/* ── Dark-mode structural overrides (token-independent) ───── */
+html[data-theme="dark"],
+html:not([data-theme="light"])
+/*@media (prefers-color-scheme: dark) {  }
+{
+/* fallback handled per-block below 
+}
+*/
+
+/* Nav sidebar */
+html[data-theme="dark"] nav[role="doc-toc"],
+html:not([data-theme="light"]) nav[role="doc-toc"] {
+  border-right: 1px solid #1e3258;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) nav[role="doc-toc"] {
+    background: #0d1e38;
+    border-right: 1px solid #1e3258;
+  }
+}
+html[data-theme="dark"] nav[role="doc-toc"] { background: #0d1e38; }
+
+/* Note label */
+html[data-theme="dark"] note::before { color: var(--note-ink); }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) note::before { color: var(--note-ink); }
+}
+
+/* Requirement backgrounds */
+html[data-theme="dark"] requirement,
+html[data-theme="dark"] requirement[category="technical"] { background: var(--ieee-blue-pale); }
+html[data-theme="dark"] requirement[category="risk"]      { background: #1e0a0a; }
+html[data-theme="dark"] requirement[category="process"]   { background: #0a1a0a; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) requirement                           { background: var(--ieee-blue-pale); }
+  html:not([data-theme="light"]) requirement[category="risk"]         { background: #1e0a0a; }
+  html:not([data-theme="light"]) requirement[category="process"]      { background: #0a1a0a; }
+}
+
+/* Inline code */
+html[data-theme="dark"] code { background: #1e2235; border-color: var(--rule); color: #a8b8e0; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) code { background: #1e2235; border-color: var(--rule); color: #a8b8e0; }
+}
+
+/* Tables */
+html[data-theme="dark"] thead tr                   { background: #0d1e38; }
+html[data-theme="dark"] tbody tr:nth-child(even)   { background: #161b2e; }
+html[data-theme="dark"] tbody tr:hover             { background: #1e2840; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) thead tr                 { background: #0d1e38; }
+  html:not([data-theme="light"]) tbody tr:nth-child(even) { background: #161b2e; }
+  html:not([data-theme="light"]) tbody tr:hover           { background: #1e2840; }
+}
+
+/* Informative bibliography */
+html[data-theme="dark"] informative-bibliography bibliography {
+  background: #181c2e; border-left-color: #2e3a5a;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) informative-bibliography bibliography {
+    background: #181c2e; border-left-color: #2e3a5a;
+  }
+}
+
+/* Figures */
+html[data-theme="dark"] figure img { border-color: var(--rule); opacity: 0.92; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) figure img { border-color: var(--rule); opacity: 0.92; }
+}
+
+/* Glossary pill */
+html[data-theme="dark"] glossary::before {
+  background: #162840; border-color: #2a4a70; color: var(--ieee-blue-mid);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) glossary::before {
+    background: #162840; border-color: #2a4a70; color: var(--ieee-blue-mid);
+  }
+}
+
+/* Nav scrollbar */
+html[data-theme="dark"] nav[role="doc-toc"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) nav[role="doc-toc"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }
+}
+
+#theme-toggle {
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  border: none;
+  width: 100%;
+  text-align: center;
+}
+
+html[data-theme="dark"] #theme-toggle { background-color: rgba(255,255,255,0.08); }
+html:not([data-theme="dark"]) #theme-toggle { background-color: rgba(0,0,0,0.08); }
+
+#theme-toggle .theme-icon {
+  display: block;
+  margin: auto;
+}
+
+html[data-theme="dark"] #theme-toggle .theme-icon::before       { content: "☀ "; }
+html:not([data-theme="dark"]) #theme-toggle .theme-icon::before  { content: "🌙 "; }
+html[data-theme="dark"] #theme-toggle .theme-icon::after       { content: "Switch mode"; }
+html:not([data-theme="dark"]) #theme-toggle .theme-icon::after  { content: "Switch mode"; }
+html[data-theme="dark"] #theme-toggle { background-color: rgba(255,255,255,0.08); color: var(--ink-mid) }
+html:not([data-theme="dark"]) #theme-toggle { background-color: rgba(0,0,0,0.08); color: var(--ink-mid) }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) #theme-toggle .theme-icon::before { content: "☀ "; }
+  html[data-theme="light"] #theme-toggle .theme-icon::before       { content: "🌙 "; }
+  html:not([data-theme="light"]) #theme-toggle .theme-icon::after { content: "Switch mode"; }
+  html[data-theme="light"] #theme-toggle .theme-icon::after       { content: "Switch mode"; }
+  html:not[data-theme="light"] #theme-toggle { background-color: rgba(255,255,255,0.08); color: var(--ink-mid) }
+  html[data-theme="light"] #theme-toggle { background-color: rgba(0,0,0,0.08); color: var(--ink-mid) }
+}
