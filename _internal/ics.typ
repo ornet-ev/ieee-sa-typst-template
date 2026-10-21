@@ -36,7 +36,7 @@
   // assign an index or id to every entry
   let return-value = grouped-by-ics.pairs()
     // sort entries alphabetically first for stability, give them an index afterwards
-    .sorted()
+    .sorted(key: it => it.at(0))
     .enumerate()
     .map(it => {
       let (counter, entries) = it
