@@ -6,6 +6,8 @@
     it
   } else if it.func() == text {
     it.text
+  } else if it.func() == [ ].func() {
+    " "
   } else if it.has("children") {
     it.children.map(_plain-text).join()
   } else if it.has("body") {
