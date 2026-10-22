@@ -1,0 +1,11 @@
+name: Build GitHub-Pages
+on: push
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: typst-community/setup-tytanic@v1
+        with:
+          tytanic-version: 0.4.1
+      - run: tt run

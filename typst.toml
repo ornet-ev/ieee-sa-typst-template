@@ -6,5 +6,4 @@ authors = ["Lukas Deichmann", "David Gregorczyk"]
 license = "MIT"
 description = "A template to craft and export IEEE SA standards"
 
-[package.compiler]
-version = "0.14.2" # once html format is stable, change to, e.g. ">=0.14.2"
+compiler = "0.15.1" # once html format is stable, change to, e.g. ">=0.15.1"
