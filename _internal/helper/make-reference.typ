@@ -1,7 +1,8 @@
+#import "referenceable-element.typ": _plain-text
 
 #let make-reference(it) = {
   // transformation rule: replace spaces with underscores
-  let normalized = it.replace(" ", "_")
+  let normalized = _plain-text(it).replace(" ", "_")
 
   // check for valid characters (alphanumerics, hyphens, underscores, colons, and dots)
   let allowed = regex("^[a-zA-Z0-9\-_:.]+$")

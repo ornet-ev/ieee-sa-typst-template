@@ -7,7 +7,7 @@
   } else if it.func() == text {
     it.text
   } else if it.has("children") {
-    it.children.map(plain-text).join()
+    it.children.map(_plain-text).join()
   } else if it.has("body") {
     _plain-text(it.body)
   } else if it.has("text") {
