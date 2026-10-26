@@ -186,7 +186,8 @@
   // no numbering for introduction and abstract
   set heading(numbering: none)
 
-  show figure: set block(breakable: true)
+  // only let table figures break across pages
+  show figure.where(kind: table): set block(breakable: true)
 
   // somewhat align pdf with doc output
   // note that this generates a warning in html mode which cannot be suppressed due to set commands not being allowed

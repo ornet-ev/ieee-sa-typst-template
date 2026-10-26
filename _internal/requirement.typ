@@ -79,6 +79,7 @@
       paged: {
         let req-label = label(req-label-str)
         show figure: set align(left)
+        show figure: set block(breakable: true)
         [
           #figure(
             [#category.prefix#padded-number: #body],
