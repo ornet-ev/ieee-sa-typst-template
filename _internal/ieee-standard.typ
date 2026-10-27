@@ -189,6 +189,16 @@
   // only let table figures break across pages
   show figure.where(kind: table): set block(breakable: true)
 
+  // allow long identifiers (e.g. MDC_ACT_..._SYSTEM) to wrap in table cells in paged output:
+  // underscores offer no line break opportunity, so add a zero-width space after each one.
+  show table.cell: it => context on-target(
+    paged: {
+      show "_": "_" + sym.zws
+      it
+    },
+    html: it,
+  )
+
   // somewhat align pdf with doc output
   // note that this generates a warning in html mode which cannot be suppressed due to set commands not being allowed
   // in contexts (which is required to dispatch between paged and html).
