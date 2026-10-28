@@ -20,6 +20,6 @@
   assert.eq(ics-map.at("Alpha").index, 1)
   assert.eq(ics-map.at("Consumer").index, 2)
   assert.eq(ics-map.at("Producer").index, 3)
-  assert.eq(ics-map.at("Alpha").entries.first().ics-id, "ICS-1-1")
-  assert.eq(ics-map.at("Producer").entries.first().ics-id, "ICS-3-1")
+  assert.eq(ics-map.at("Alpha").entries.first().ics-id, "ICS-3")
+  assert.eq(ics-map.at("Producer").entries.first().ics-id, "ICS-1")
 }
