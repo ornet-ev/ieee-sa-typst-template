@@ -111,6 +111,7 @@
 /// - abbreviations (array): array of structure (short, long(, optional custom plural)?)
 /// - introduction (content): introduction section of the standard document
 /// - normative-references (array of normative-reference): normative references required for this standard document
+/// - word-usage (content, none): replaces the default "Word usage" text, which is adapted from the IEEE Standards Style Manual
 /// - notational-conventions (content): notational conventions section for the standard document
 /// - informative-bibliography (array of bibliography): informative bibliography entries
 /// - definitions (array of definitions): array of definition elements to include in the standard document
@@ -118,7 +119,7 @@
 /// - informative-annexes (array of content): array of additional annexes to add to the standard document
 /// - body ():
 /// ->
-#let ieee-standard(
+#let ieee-sa-compatible-standard(
   metadata: none,
   abstract: none,
   keywords: (),
@@ -128,6 +129,7 @@
   definitions: none,
   scope: none,
   additional-overview: none,
+  word-usage: none,
   notational-conventions: none,
   informative-bibliography: none,
   normative-annexes: (),
@@ -302,24 +304,31 @@
 
     == Word usage
 
-    The word *shall* indicates mandatory requirements strictly to be followed in
-    order to conform to the standard  and from which no deviation is permitted
-    (*shall* equals *is required to*). #footnote[The use of the word
-      must is deprecated and cannot be used when stating mandatory requirements; must
-      is used only to describe unavoidable situations.]
+    #if word-usage != none {
+      word-usage
+    } else [
+      The word *shall* indicates mandatory requirements strictly to be followed in
+      order to conform to the standard  and from which no deviation is permitted
+      (*shall* equals *is required to*). #footnote[The use of the word
+        must is deprecated and cannot be used when stating mandatory requirements; must
+        is used only to describe unavoidable situations.]
 
-    The word *should* indicates that among several possibilities one is
-    recommended as particularly suitable, without mentioning or excluding others; or
-    that a certain course of action is preferred but not necessarily
-    required (*should* equals *is recommended that*).
+      The word *should* indicates that among several possibilities one is
+      recommended as particularly suitable, without mentioning or excluding others; or
+      that a certain course of action is preferred but not necessarily
+      required (*should* equals *is recommended that*).
 
-    The word *may* is used to indicate a course of action permissible within the
-    limits of the standard (*may* equals is *permitted to*).
+      The word *may* is used to indicate a course of action permissible within the
+      limits of the standard (*may* equals is *permitted to*).
 
-    The word *can* is used for statements of possibility and capability, whether
-    material, physical, or causal (*can* equals *is able to*).
-    #footnote[The use of will is deprecated and cannot be used when
-      stating mandatory requirements; will is only used in statements of fact.]
+      The word *can* is used for statements of possibility and capability, whether
+      material, physical, or causal (*can* equals *is able to*).
+      #footnote[The use of will is deprecated and cannot be used when
+        stating mandatory requirements; will is only used in statements of fact.]
+
+      _This default text is adapted from the IEEE Standards Style Manual. Provide
+      the `word-usage` parameter to replace it._
+    ]
 
   ]
 

@@ -13,3 +13,4 @@ No changes have been logged prior to version 0.2.0.
 
 - HTML output of ICS tables is now enriched with links to requirements.
 - ICS ids now correspond to the requirement number (e.g. `TR0090` becomes `ICS-90`) instead of a per-role counter; entries within a role are sorted by requirement number.
+- Template and project names to exclude any formal reference to the IEEE SA.
