@@ -1,5 +1,6 @@
 #import "state.typ": get-all-requirements, ics-key, req-label-key, req-level-key
 #import "glossary.typ": gls
+#import "helper/referenceable-element.typ": _plain-text
 #import "@preview/bullseye:0.1.0": *
 
 
@@ -107,16 +108,34 @@
   html.elem("ics-role", attrs: (
     "role-name": feature
   ))[#{
+    html.elem("ics-header")[
+      #html.elem("span")[Index]
+      #html.elem("span")[Reference]
+      #html.elem("span")[Support]
+    ]
+
     for entry-dict in ics-role.at("entries") {
       // panic(entry-dict)
 
       let ics-id = entry-dict.ics-id
       let entry = entry-dict.entry
+      let req-label = entry.at(req-label-key)
+      let req-id = str(req-label)
+
+      // resolve the displayed requirement label (e.g. TR0001) from the requirement's supplement
+      let found = query(req-label)
+      let req-display = if found.len() > 0 {
+        _plain-text(found.first().supplement)
+      } else {
+        req-id
+      }
+
       html.elem("ics-entry", attrs: (
         "ics-id": ics-id,
-        "requirement": str(entry.at(req-label-key)),
+        "requirement-id": req-id,
+        "requirement-label": req-display,
         "level": entry.at(req-level-key)
-      ))
+      ))[#html.elem("a", attrs: ("href": "#" + req-id))[#req-display]]
     }
   }]
 }
