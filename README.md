@@ -2,7 +2,7 @@
 
 A Typst template providing a scaffold to develop SDC standards capturing requirements and collecting implementation conformity statements. 
 
-Typst can produce a PDF preview and a custom-element HTML export, which can be post-processed into Word. Requires Typst `0.14.2` or newer.
+Typst can produce a PDF preview and a custom-element HTML export, which can be post-processed into Word. Requires Typst `0.15.1` or newer.
 
 ## Including the library
 
