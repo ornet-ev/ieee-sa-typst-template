@@ -6,10 +6,10 @@
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
   /* IEEE identity */
-  --ieee-blue:        #002855;
-  --ieee-blue-mid:    #0057a8;
-  --ieee-blue-light:  #e8f0fb;
-  --ieee-blue-pale:   #f3f7fd;
+  --brand-blue:        #002855;
+  --brand-blue-mid:    #0057a8;
+  --brand-blue-light:  #e8f0fb;
+  --brand-blue-pale:   #f3f7fd;
 
   /* Neutrals */
   --ink:              #1a1a2e;
@@ -83,7 +83,7 @@ nav[role="doc-toc"] {
   width: var(--nav-width);
   height: 100vh;
   overflow-y: auto;
-  background: var(--ieee-blue);
+  background: var(--brand-blue);
   color: var(--white);
   padding: 2rem 1.25rem 3rem;
   display: flex;
@@ -184,13 +184,13 @@ nav[role="doc-toc"] ol ol ol { display: none; }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-ui);
   font-weight: 600;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   margin-top: 2.4rem;
   margin-bottom: 0.6rem;
   line-height: 1.25;
 }
 
-h2 { font-size: 1.45rem; border-bottom: 2px solid var(--ieee-blue); padding-bottom: 0.35rem; }
+h2 { font-size: 1.45rem; border-bottom: 2px solid var(--brand-blue); padding-bottom: 0.35rem; }
 h3 { font-size: 1.12rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.25rem; }
 h4 { font-size: 0.97rem; font-weight: 600; }
 h5, h6 { font-size: 0.9rem; font-weight: 500; }
@@ -198,7 +198,7 @@ h5, h6 { font-size: 0.9rem; font-weight: 500; }
 /* Introduction heading is h3 but should look like a section opener */
 h3#introduction {
   font-size: 1.15rem;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   border-bottom: 1px solid var(--rule);
   padding-bottom: 0.3rem;
   margin-top: 3rem;
@@ -208,11 +208,11 @@ p { margin: 0.8rem 0; }
 p + p { margin-top: 0.6rem; }
 
 a {
-  color: var(--ieee-blue-mid);
+  color: var(--brand-blue-mid);
   text-decoration: none;
   text-underline-offset: 2px;
 }
-a:hover { color: var(--ieee-blue); }
+a:hover { color: var(--brand-blue); }
 
 strong { font-weight: 600; }
 em { font-style: italic; }
@@ -248,7 +248,7 @@ abstract::before {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   margin-bottom: 0.85rem;
 }
 
@@ -277,7 +277,7 @@ keywords::before {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   margin-bottom: 0.85rem;
 }
 
@@ -301,7 +301,7 @@ requirement {
   border-radius: 6px;
   padding: 1rem 1.25rem 1rem 1.25rem;
   margin: 1.5rem 0;
-  background: var(--ieee-blue-pale);
+  background: var(--brand-blue-pale);
   position: relative;
   padding-top: 2rem;
 }
@@ -381,8 +381,8 @@ normative-references {
 normative-reference {
   display: block;
   padding: 0.65rem 1rem 0.65rem 1rem;
-  border-left: 3px solid var(--ieee-blue-mid);
-  background: var(--ieee-blue-pale);
+  border-left: 3px solid var(--brand-blue-mid);
+  background: var(--brand-blue-pale);
   margin: 0.5rem 0;
   border-radius: 0 4px 4px 0;
   font-size: 0.92rem;
@@ -393,7 +393,7 @@ normative-reference::before {
   font-family: var(--font-ui);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   display: inline-block;
   margin-right: 0.6em;
   min-width: 5em;
@@ -463,9 +463,9 @@ glossary::before {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--ieee-blue);
-  background: var(--ieee-blue-pale);
-  border: 1px solid var(--ieee-blue-light);
+  color: var(--brand-blue);
+  background: var(--brand-blue-pale);
+  border: 1px solid var(--brand-blue-light);
   padding: 0.15rem 0.7rem;
   border-radius: 999px;
   white-space: nowrap;
@@ -561,7 +561,7 @@ ics-role::before {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ieee-blue);
+  color: var(--brand-blue);
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -592,7 +592,7 @@ ics-entry {
 }
 
 ics-entry::before { content: attr(ics-id); font-weight: 600; color: var(--ink); }
-ics-entry::after  { content: attr(level); color: var(--ieee-blue-mid); font-style: italic; font-size: 0.78rem; }
+ics-entry::after  { content: attr(level); color: var(--brand-blue-mid); font-style: italic; font-size: 0.78rem; }
 
 /* ── Tables ───────────────────────────────────────────────── */
 
@@ -625,7 +625,7 @@ table {
 }
 
 thead tr {
-  background: var(--ieee-blue);
+  background: var(--brand-blue);
   color: var(--white);
 }
 
@@ -640,8 +640,8 @@ thead th {
 
 thead th:last-child { border-right: none; }
 
-tbody tr:nth-child(even) { background: var(--ieee-blue-pale); }
-tbody tr:hover          { background: var(--ieee-blue-light); }
+tbody tr:nth-child(even) { background: var(--brand-blue-pale); }
+tbody tr:hover          { background: var(--brand-blue-light); }
 
 tbody td {
   padding: 0.55rem 0.85rem;
@@ -726,7 +726,7 @@ section[role="doc-endnotes"] li {
 }
 
 section[role="doc-endnotes"] a {
-  color: var(--ieee-blue-mid);
+  color: var(--brand-blue-mid);
   font-weight: 600;
   text-decoration: none;
 }
@@ -744,7 +744,7 @@ sup a {
   font-family: var(--font-ui);
   font-size: 0.7em;
   font-weight: 600;
-  color: var(--ieee-blue-mid);
+  color: var(--brand-blue-mid);
   text-decoration: none;
 }
 sup a:hover { text-decoration: underline; }
@@ -823,10 +823,10 @@ nav[role="doc-toc"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25
 
 /* ── Explicit dark choice ─────────────────────────────────── */
 html[data-theme="dark"] {
-  --ieee-blue:        #1a4a8a;
-  --ieee-blue-mid:    #5b9bd5;
-  --ieee-blue-light:  #1e3a5f;
-  --ieee-blue-pale:   #162840;
+  --brand-blue:        #1a4a8a;
+  --brand-blue-mid:    #5b9bd5;
+  --brand-blue-light:  #1e3a5f;
+  --brand-blue-pale:   #162840;
 
   --ink:              #e8eaf2;
   --ink-mid:          #b0b8d0;
@@ -849,10 +849,10 @@ html[data-theme="dark"] {
 /* ── OS prefers dark, user has not overridden to light ───── */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) {
-    --ieee-blue:        #1a4a8a;
-    --ieee-blue-mid:    #5b9bd5;
-    --ieee-blue-light:  #1e3a5f;
-    --ieee-blue-pale:   #162840;
+    --brand-blue:        #1a4a8a;
+    --brand-blue-mid:    #5b9bd5;
+    --brand-blue-light:  #1e3a5f;
+    --brand-blue-pale:   #162840;
 
     --ink:              #e8eaf2;
     --ink-mid:          #b0b8d0;
@@ -903,11 +903,11 @@ html[data-theme="dark"] note::before { color: var(--note-ink); }
 
 /* Requirement backgrounds */
 html[data-theme="dark"] requirement,
-html[data-theme="dark"] requirement[category="technical"] { background: var(--ieee-blue-pale); }
+html[data-theme="dark"] requirement[category="technical"] { background: var(--brand-blue-pale); }
 html[data-theme="dark"] requirement[category="risk"]      { background: #1e0a0a; }
 html[data-theme="dark"] requirement[category="process"]   { background: #0a1a0a; }
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) requirement                           { background: var(--ieee-blue-pale); }
+  html:not([data-theme="light"]) requirement                           { background: var(--brand-blue-pale); }
   html:not([data-theme="light"]) requirement[category="risk"]         { background: #1e0a0a; }
   html:not([data-theme="light"]) requirement[category="process"]      { background: #0a1a0a; }
 }
@@ -946,11 +946,11 @@ html[data-theme="dark"] figure img { border-color: var(--rule); opacity: 0.92; }
 
 /* Glossary pill */
 html[data-theme="dark"] glossary::before {
-  background: #162840; border-color: #2a4a70; color: var(--ieee-blue-mid);
+  background: #162840; border-color: #2a4a70; color: var(--brand-blue-mid);
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) glossary::before {
-    background: #162840; border-color: #2a4a70; color: var(--ieee-blue-mid);
+    background: #162840; border-color: #2a4a70; color: var(--brand-blue-mid);
   }
 }
 
