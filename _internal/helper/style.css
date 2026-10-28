@@ -566,9 +566,23 @@ ics-role::before {
   margin-bottom: 0.4rem;
 }
 
+ics-header {
+  display: grid;
+  grid-template-columns: 7rem 7rem 1fr;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
 ics-entry {
   display: grid;
-  grid-template-columns: 7rem 1fr auto;
+  grid-template-columns: 7rem 7rem 1fr;
   gap: 0.5rem;
   align-items: center;
   font-family: var(--font-ui);
