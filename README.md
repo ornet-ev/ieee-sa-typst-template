@@ -1,4 +1,4 @@
-# ieee-sa-compatible-standard
+# Typst Standard Crafting Template
 
 A Typst template providing a scaffold to develop SDC standards capturing requirements and collecting implementation conformity statements. 
 
