@@ -1,5 +1,5 @@
-// Within a role, entries keep requirement registration order and get
-// consecutive ids; roles are sorted case-sensitively (uppercase first).
+// Within a role, entries are sorted numerically by requirement number and get
+// ids matching their requirement number; roles are sorted case-sensitively (uppercase first).
 #import "/_internal/state.typ": add-requirement, update-requirement
 #import "/_internal/ics.typ": _get-ics-map
 
@@ -19,6 +19,6 @@
   assert.eq(ics-map.keys(), ("Zeta", "beta"))
 
   let beta = ics-map.at("beta").entries
-  assert.eq(beta.map(e => e.ics-id), ("ICS-2-1", "ICS-2-2", "ICS-2-3"))
-  assert.eq(beta.map(e => e.entry.req-id), ("3", "1", "4"))
+  assert.eq(beta.map(e => e.ics-id), ("ICS-1", "ICS-3", "ICS-4"))
+  assert.eq(beta.map(e => e.entry.req-id), ("1", "3", "4"))
 }

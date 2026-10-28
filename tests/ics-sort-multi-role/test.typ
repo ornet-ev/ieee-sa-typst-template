@@ -11,7 +11,7 @@
   let ics-map = _get-ics-map()
 
   assert.eq(ics-map.keys(), ("Consumer", "Producer"))
-  assert.eq(ics-map.at("Consumer").entries.map(e => e.ics-id), ("ICS-1-1", "ICS-1-2"))
-  assert.eq(ics-map.at("Producer").entries.map(e => e.ics-id), ("ICS-2-1",))
+  assert.eq(ics-map.at("Consumer").entries.map(e => e.ics-id), ("ICS-1", "ICS-2"))
+  assert.eq(ics-map.at("Producer").entries.map(e => e.ics-id), ("ICS-1",))
   assert.eq(ics-map.at("Consumer").entries.at(1).entry.req-level, "should")
 }

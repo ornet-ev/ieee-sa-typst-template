@@ -43,15 +43,13 @@
       let (counter, entries) = it
       let (ics, requirements) = entries
 
-      let mapped-entries = requirements.enumerate()
-        .map(req => {
-          let (req-counter, req-data) = req
-
-          (
-            "ics-id": "ICS-" + str(counter + 1) + "-" + str(req-counter + 1),
-            "entry": req-data
-          )
-        })
+      // entries are sorted by requirement number; the ics id corresponds to it, e.g. TR0090 -> ICS-90
+      let mapped-entries = requirements
+        .sorted(key: req-data => int(req-data.at("req-id")))
+        .map(req-data => (
+          "ics-id": "ICS-" + req-data.at("req-id"),
+          "entry": req-data
+        ))
       (
         (ics),
         (
