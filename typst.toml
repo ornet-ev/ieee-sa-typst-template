@@ -1,9 +1,8 @@
 [package]
-name = "ieee-standard"
-version = "0.1.1"
+name = "ieee-sa-compatible-standard"
+version = "0.2.0"
 entrypoint = "lib.typ"
 authors = ["Lukas Deichmann", "David Gregorczyk"]
 license = "MIT"
-description = "A template to craft and export IEEE SA standards"
-
+description = "A template to craft standards that are transferable to documents conforming to the IEEE SA document layout."
 compiler = "0.15.1" # once html format is stable, change to, e.g. ">=0.15.1"
