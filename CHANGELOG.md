@@ -9,6 +9,8 @@ No changes have been logged prior to version 0.2.0.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-28
+
 ### Changed
 
 - HTML output of ICS tables is now enriched with links to requirements.
